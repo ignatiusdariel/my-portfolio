@@ -36,11 +36,12 @@ const Navigation = () => {
             <div className="p-2 rounded-lg bg-primary/10 text-primary">
               <Code className="w-5 h-5" />
             </div>
-            <span className="font-bold text-lg">YourName</span>
+            <span className="font-bold text-lg">Ignatius Dariel</span>
           </div>
 
-          {/* Desktop Navigation */}
+          {/* Right Side: Navigation + CTA */}
           <div className="hidden md:flex items-center gap-8">
+            {/* Desktop Navigation */}
             {navItems.map((item, index) => (
               <a
                 key={index}
@@ -50,17 +51,17 @@ const Navigation = () => {
                 {item.label}
               </a>
             ))}
-          </div>
 
-          {/* Desktop CTA */}
-          <div className="hidden md:flex items-center gap-4">
-            <Button variant="outline" size="sm">
-              <Download className="w-4 h-4 mr-2" />
-              Resume
-            </Button>
-            <Button variant="hero" size="sm">
-              Hire Me
-            </Button>
+            {/* Desktop CTA */}
+            <div className="hidden md:flex items-center gap-4">
+              <Button variant="outline" size="sm">
+                <Download className="w-4 h-4 mr-2" />
+                Resume
+              </Button>
+              <Button variant="hero" size="sm">
+                Hire Me
+              </Button>
+            </div>
           </div>
 
           {/* Mobile Menu Button */}

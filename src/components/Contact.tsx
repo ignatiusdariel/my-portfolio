@@ -10,19 +10,19 @@ const Contact = () => {
     {
       icon: <Mail className="w-5 h-5" />,
       title: "Email",
-      value: "your.email@example.com",
-      action: "mailto:your.email@example.com"
+      value: "ignatiusdariel@gmail.com",
+      action: "mailto:ignatiusdariel@gmail.com"
     },
-    {
-      icon: <Phone className="w-5 h-5" />,
-      title: "Phone",
-      value: "+1 (555) 123-4567",
-      action: "tel:+15551234567"
-    },
+    // {
+    //   icon: <Phone className="w-5 h-5" />,
+    //   title: "Phone",
+    //   value: "+1 (555) 123-4567",
+    //   action: "tel:+15551234567"
+    // },
     {
       icon: <MapPin className="w-5 h-5" />,
       title: "Location",
-      value: "Your City, Country",
+      value: "Bandung, Indonesia",
       action: null
     }
   ];
@@ -142,7 +142,7 @@ const Contact = () => {
                       <label className="text-sm font-medium">Email</label>
                       <Input 
                         type="email" 
-                        placeholder="your.email@example.com"
+                        placeholder="ignatiusdariel@gmail.com"
                         className="bg-background/50 border-border/50 focus:border-primary/50"
                       />
                     </div>

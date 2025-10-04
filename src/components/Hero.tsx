@@ -5,7 +5,7 @@ import heroImage from "@/assets/hero-bg.jpg";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-start overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-hero" />
       <div 
@@ -25,8 +25,8 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-6 text-center">
-        <div className="max-w-4xl mx-auto animate-fade-in">
+      <div className="relative z-10 container px-6 md:px-12 text-left">
+        <div className="max-w-4xl animate-fade-in">
           <Badge variant="outline" className="mb-6 text-muted-foreground border-muted bg-card/50 backdrop-blur-sm">
             <Code className="w-4 h-4 mr-2" />
             Available for opportunities
@@ -38,12 +38,12 @@ const Hero = () => {
             <span className="text-accent">Evolving to Full Stack</span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl leading-relaxed">
             Crafting exceptional mobile experiences and expanding into the world of web development. 
             Passionate about clean code, user-centric design, and cutting-edge technology.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+          <div className="flex flex-col sm:flex-row gap-4 justify-start items-center mb-12">
             <Button variant="hero" size="lg" className="min-w-48">
               View My Work
             </Button>
@@ -52,7 +52,7 @@ const Hero = () => {
             </Button>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-6 text-muted-foreground">
+          <div className="flex flex-wrap justify-start gap-6 text-muted-foreground">
             <div className="flex items-center gap-2">
               <Smartphone className="w-5 h-5 text-primary" />
               <span>Mobile Development</span>
