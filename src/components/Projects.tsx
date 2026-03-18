@@ -1,152 +1,134 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Github, Smartphone, Globe } from "lucide-react";
+import React from "react";
 
 const Projects = () => {
   const projects = [
     {
-      title: "E-Commerce Mobile App",
-      description: "A full-featured mobile shopping application with real-time inventory, secure payments, and seamless user experience.",
-      type: "Mobile",
-      icon: <Smartphone className="w-5 h-5" />,
-      technologies: ["React Native", "Firebase", "Stripe", "Redux"],
-      status: "Completed",
-      gradient: "from-primary/20 to-primary/5"
+      title: "NightWatch",
+      tags: ["React", "Node.js", "MongoDB"],
+      num: "001",
+      code: `const watch = createServer({
+  port: 3000,
+  middleware: [auth, cors],
+  routes: loadRoutes('./api')
+});
+watch.listen();`,
     },
     {
-      title: "Fitness Tracking App",
-      description: "Cross-platform fitness application with workout plans, progress tracking, and social features for motivation.",
-      type: "Mobile",
-      icon: <Smartphone className="w-5 h-5" />,
-      technologies: ["Flutter", "Firebase", "Charts", "GPS"],
-      status: "Completed",
-      gradient: "from-accent/20 to-accent/5"
+      title: "Cipher API",
+      tags: ["Python", "FastAPI", "Redis"],
+      num: "002",
+      code: `@app.post("/encrypt")
+async def encrypt(data):
+  key = derive_key(SECRET)
+  return {"cipher": aes_enc(data, key)}`,
     },
     {
-      title: "Task Management Web App",
-      description: "Modern web application for team collaboration with real-time updates, file sharing, and project tracking.",
-      type: "Web",
-      icon: <Globe className="w-5 h-5" />,
-      technologies: ["React", "TypeScript", "Node.js", "MongoDB"],
-      status: "In Progress",
-      gradient: "from-primary/20 to-accent/5"
+      title: "ShadowDB",
+      tags: ["PostgreSQL", "TypeScript", "ORM"],
+      num: "003",
+      code: `const q = db
+  .select('*')
+  .from('missions')
+  .where('status','active')
+  .orderBy('priority','desc')
+  .limit(20);`,
     },
     {
-      title: "Weather Dashboard",
-      description: "Responsive web dashboard providing detailed weather analytics, forecasts, and location-based insights.",
-      type: "Web",
-      icon: <Globe className="w-5 h-5" />,
-      technologies: ["Vue.js", "REST API", "Charts.js", "CSS3"],
-      status: "Learning Project",
-      gradient: "from-accent/20 to-primary/5"
-    }
+      title: "Dossier App",
+      tags: ["Next.js", "Tailwind", "Supabase"],
+      num: "004",
+      code: `export default function Page() {
+  const [data] = useDossier(id);
+  return (
+    <Layout>
+      <FileView data={data} />
+    </Layout>
+  );
+}`,
+    },
+    {
+      title: "ReconBot",
+      tags: ["Python", "Selenium", "Lambda"],
+      num: "005",
+      code: `def run_mission(target):
+  driver = init_headless()
+  data = extract(driver, target)
+  store_s3(data)
+  return {"status": "ok"}`,
+    },
+    {
+      title: "GridLine",
+      tags: ["React", "D3.js", "WebSockets"],
+      num: "006",
+      code: `const ws = new WebSocket(WS_URL);
+ws.onmessage = (e) => {
+  const {x,y,v} = parse(e.data);
+  chart.update({x,y,v});
+};`,
+    },
   ];
 
+  const doubled = [...projects, ...projects]; // infinite reel illusion
+
   return (
-    <section className="py-24 bg-gradient-to-b from-background to-card/30">
-      <div className="container mx-auto px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16 animate-fade-in">
-            <Badge variant="outline" className="mb-4 text-muted-foreground border-muted">
-              Portfolio
-            </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Featured <span className="text-primary">Projects</span>
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              A showcase of my work spanning mobile applications and web development projects. 
-              Each project represents a step in my journey towards full-stack mastery.
-            </p>
-          </div>
+    <>
+      <div className="divider">— Frame 003 · Reel of Work —</div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {projects.map((project, index) => (
-              <Card 
-                key={index}
-                className="group bg-card/50 backdrop-blur-sm border-border/50 hover:shadow-card transition-all duration-300 hover:-translate-y-2 animate-slide-up overflow-hidden"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className={`h-2 bg-gradient-to-r ${project.gradient}`} />
-                
-                <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-lg bg-primary/10 text-primary">
-                        {project.icon}
-                      </div>
-                      <div>
-                        <CardTitle className="group-hover:text-primary transition-colors">
-                          {project.title}
-                        </CardTitle>
-                        <div className="flex items-center gap-2 mt-1">
-                          <Badge variant="secondary" className="text-xs">
-                            {project.type}
-                          </Badge>
-                          <Badge 
-                            variant={project.status === 'Completed' ? 'default' : 
-                                   project.status === 'In Progress' ? 'secondary' : 'outline'}
-                            className="text-xs"
-                          >
-                            {project.status}
-                          </Badge>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </CardHeader>
+      <section id="work">
+        <div className="work-head reveal">
+          <h2>The Reel</h2>
+          <p>// Projects developed, shipped, survived — hover to inspect</p>
+        </div>
 
-                <CardContent className="space-y-4">
-                  <p className="text-muted-foreground leading-relaxed">
-                    {project.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((tech, techIndex) => (
-                      <Badge 
-                        key={techIndex} 
-                        variant="outline" 
-                        className="text-xs border-muted/50 hover:border-primary/50 transition-colors"
-                      >
-                        {tech}
-                      </Badge>
+        <div className="reel-wrap">
+          <div className="reel-track">
+            {doubled.map((p, i) => (
+              <React.Fragment key={i}>
+                <div className="frame-unit">
+                  <div className="spr-row">
+                    {Array.from({ length: 17 }).map((_, i) => (
+                      <div key={i} className="spr-h" />
                     ))}
                   </div>
 
-                  <div className="flex gap-3 pt-2">
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="flex-1 group-hover:border-primary/50 transition-colors"
-                    >
-                      <Github className="w-4 h-4 mr-2" />
-                      Code
-                    </Button>
-                    <Button 
-                      variant="secondary" 
-                      size="sm" 
-                      className="flex-1 group-hover:bg-primary/10 transition-colors"
-                    >
-                      <ExternalLink className="w-4 h-4 mr-2" />
-                      Demo
-                    </Button>
+                  <div className="film-cell">
+                    <span className="cell-num">{p.num} ▲</span>
+                    <span className="cell-exp">ISO 400</span>
+
+                    <div className="cell-bg">
+                      <span className="pi">⬡</span>
+                    </div>
+
+                    <div className="code-preview">
+                      <pre>{p.code}</pre>
+                    </div>
+
+                    <div className="cell-overlay">
+                      <span className="cell-title">{p.title}</span>
+                      <div className="cell-tags">
+                        {p.tags.map((t, idx) => (
+                          <span key={idx} className="cell-tag">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                </CardContent>
-              </Card>
+
+                  <div className="spr-row">
+                    {Array.from({ length: 17 }).map((_, i) => (
+                      <div key={i} className="spr-h" />
+                    ))}
+                  </div>
+                </div>
+
+                <div className="frame-sep" />
+              </React.Fragment>
             ))}
           </div>
-
-          <div className="text-center mt-12">
-            <p className="text-muted-foreground mb-6">
-              More projects coming soon as I continue to expand my portfolio across mobile and web platforms.
-            </p>
-            <Button variant="hero" size="lg">
-              View All Projects
-            </Button>
-          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 
