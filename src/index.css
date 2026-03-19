@@ -1105,3 +1105,316 @@ a:hover{
     padding:90px 24px;
   }
 }
+
+/* ─────────────────────────────
+   📞 CONTACT SECTION
+─────────────────────────────*/
+
+/* ── Section wrapper ── */
+.contact { padding: 90px 48px 100px; }
+
+.sectionLabel {
+  display: flex; align-items: center; gap: 20px;
+  font-size: 0.53rem; letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--amber-dim); margin-bottom: 64px;
+}
+.sectionLabel::before, .sectionLabel::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(to right, transparent, var(--smoke), transparent);
+}
+
+/* ── Two-column layout ── */
+.layout {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+/* ══════════════════════════════════════════
+   WANTED POSTER
+══════════════════════════════════════════ */
+.posterWrap {
+  opacity: 0;
+  transform: translateY(40px) rotate(-1.5deg);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.posterVisible {
+  opacity: 1;
+  transform: translateY(0) rotate(-1.5deg);
+}
+
+.poster {
+  position: relative;
+  background: #d4b483;
+  border: 3px solid #8b6914;
+  padding: 0;
+  box-shadow:
+    4px 4px 0 #6b4e10,
+    8px 8px 0 rgba(0,0,0,0.4),
+    0 0 60px rgba(0,0,0,0.6);
+}
+
+/* aged paper grain */
+.posterTexture {
+  position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.25'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+}
+
+.posterInner {
+  position: relative; z-index: 2;
+  padding: 28px 28px 24px;
+  display: flex; flex-direction: column; align-items: center; gap: 0;
+  text-align: center;
+}
+
+/* ── Header badge ── */
+.posterBadge {
+  font-family: 'Special Elite', cursive;
+  font-size: 2rem; letter-spacing: 0.2em;
+  color: #1a0e00;
+  border-top: 3px double #6b4e10;
+  border-bottom: 3px double #6b4e10;
+  padding: 6px 24px; margin-bottom: 6px;
+  width: 100%;
+  text-shadow: 1px 1px 0 rgba(255,255,255,0.2);
+  animation: wantedFlicker 10s infinite;
+}
+@keyframes wantedFlicker {
+  0%,92%,100%{opacity:1} 93%{opacity:0.7} 95%{opacity:1} 97%{opacity:0.85}
+}
+
+.posterSubBadge {
+  font-size: 0.52rem; letter-spacing: 0.22em;
+  color: #4a3210; text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+/* ── Photo frame ── */
+.posterPhoto {
+  width: 180px; height: 200px;
+  border: 3px solid #6b4e10;
+  background: #2a1e0a;
+  position: relative;
+  margin-bottom: 16px;
+  overflow: hidden;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
+}
+.posterSilhouette {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+  padding-bottom: 0;
+}
+.silHead {
+  width: 70px; height: 80px;
+  background: #1a1208;
+  border-radius: 50% 50% 48% 48%;
+  margin-bottom: -2px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.8);
+}
+.silBody {
+  width: 160px; height: 130px;
+  background: #1a1208;
+  border-radius: 50% 50% 0 0 / 30% 30% 0 0;
+}
+.posterPhotoLabel {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: rgba(0,0,0,0.7);
+  font-size: 0.52rem; letter-spacing: 0.25em; color: #c8a050;
+  text-transform: uppercase; padding: 4px 0; text-align: center;
+}
+
+/* ── Name / headline ── */
+.posterName {
+  font-family: 'Special Elite', cursive;
+  font-size: 1.6rem; line-height: 1.05;
+  color: #1a0e00; margin-bottom: 10px;
+  text-shadow: 1px 1px 0 rgba(255,255,255,0.15);
+}
+.posterAccent { color: #8b2000; }
+
+.posterDivider {
+  font-size: 0.8rem; color: #6b4e10; letter-spacing: 0.3em;
+  margin-bottom: 10px;
+}
+
+.posterDesc {
+  font-size: 0.72rem; color: #3a2810; line-height: 1.8; margin-bottom: 14px;
+}
+.posterDescSub { font-size: 0.58rem; color: #6b4e10; font-style: italic; }
+
+/* ── Reward banner ── */
+.posterReward {
+  background: #1a0e00; color: #d4a840;
+  padding: 8px 32px; margin-bottom: 18px;
+  display: flex; flex-direction: column; align-items: center;
+  border: 1px solid #6b4e10; width: 100%;
+}
+.rewardLabel { font-size: 0.5rem; letter-spacing: 0.35em; text-transform: uppercase; opacity: 0.7; }
+.rewardAmt   { font-family: 'Special Elite', cursive; font-size: 1.1rem; letter-spacing: 0.1em; }
+
+/* ── Social links on poster ── */
+.posterLinks {
+  display: flex; flex-direction: column; gap: 8px;
+  width: 100%; margin-bottom: 16px;
+}
+.posterLink {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none;
+  padding: 6px 10px;
+  border: 1px solid rgba(107,78,16,0.4);
+  background: rgba(26,14,0,0.08);
+  transition: all 0.3s;
+  color: #2a1a00;
+}
+.posterLink:hover { background: rgba(26,14,0,0.18); border-color: #6b4e10; }
+.posterLinkIcon {
+  color: #6b4e10; display: flex; align-items: center; flex-shrink: 0;
+  transition: color 0.3s;
+}
+.posterLink:hover .posterLinkIcon { color: #8b2000; }
+.icon { width: 16px; height: 16px; }
+.posterLinkText { font-size: 0.65rem; color: #3a2810; letter-spacing: 0.05em; }
+
+/* ── Footer line ── */
+.posterFooter {
+  font-family: 'Special Elite', cursive;
+  font-size: 0.6rem; letter-spacing: 0.15em; color: #6b4e10;
+  border-top: 1px solid #8b6914; padding-top: 10px; width: 100%;
+  text-align: center;
+}
+
+/* ── Pin holes ── */
+.pin {
+  position: absolute; width: 10px; height: 10px;
+  border-radius: 50%; background: #3a2810;
+  border: 1px solid #1a0e00;
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.2);
+  z-index: 3;
+}
+.pinTL { top:  8px; left:  8px; }
+.pinTR { top:  8px; right: 8px; }
+.pinBL { bottom: 8px; left:  8px; }
+.pinBR { bottom: 8px; right: 8px; }
+
+/* ══════════════════════════════════════════
+   CONTACT FORM PANEL
+══════════════════════════════════════════ */
+.formPanel {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.7s ease 0.1s, transform 0.7s ease 0.1s;
+  border: 1px solid var(--smoke);
+  background: var(--near-black);
+  padding: 40px;
+  position: relative;
+}
+.formPanel::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    -45deg, transparent, transparent 8px,
+    rgba(255,255,255,0.005) 8px, rgba(255,255,255,0.005) 9px
+  );
+  pointer-events: none;
+}
+.formVisible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.formEyebrow {
+  font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--amber-dim); margin-bottom: 28px;
+  padding-bottom: 12px; border-bottom: 1px solid var(--smoke);
+}
+
+.form { display: flex; flex-direction: column; gap: 20px; }
+.row  { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.field { display: flex; flex-direction: column; gap: 8px; }
+
+.label {
+  font-size: 0.52rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--paper-ghost);
+}
+
+.input,
+.textarea {
+  background: var(--dark);
+  border: 1px solid var(--smoke);
+  color: var(--paper);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.78rem;
+  padding: 12px 14px;
+  outline: none; resize: none; width: 100%;
+  transition: border-color 0.3s, background 0.3s;
+}
+.input::placeholder,
+.textarea::placeholder { color: var(--paper-ghost); opacity: 0.5; }
+.input:focus, .textarea:focus {
+  border-color: var(--amber-dim);
+  background: var(--charcoal);
+}
+
+/* ── Submit ── */
+.submitBtn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 14px;
+  padding: 14px 36px;
+  border: 1px solid var(--amber-dim); background: transparent;
+  color: var(--amber);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.68rem; letter-spacing: 0.23em; text-transform: uppercase;
+  cursor: pointer; transition: all 0.3s;
+  position: relative; overflow: hidden; align-self: flex-start;
+}
+.submitBtn::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--amber-glow);
+  transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+}
+.submitBtn:hover:not(:disabled) { border-color: var(--amber); box-shadow: 0 0 24px rgba(200,133,42,0.14); }
+.submitBtn:hover:not(:disabled)::before { transform: scaleX(1); }
+.submitBtn:disabled { opacity: 0.55; cursor: not-allowed; }
+.arrow { transition: transform 0.3s; }
+.submitBtn:hover:not(:disabled) .arrow { transform: translateX(5px); }
+
+.spinner {
+  display: inline-block; width: 12px; height: 12px;
+  border: 1.5px solid var(--amber-dim); border-top-color: var(--amber);
+  border-radius: 50%; animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Error / Success ── */
+.errorMsg {
+  font-size: 0.65rem; color: #c04040;
+  border-left: 2px solid #c04040; padding-left: 10px; margin-top: -8px;
+}
+.successMsg {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 16px; padding: 40px 20px; text-align: center;
+}
+.successIcon { font-size: 2rem; color: var(--amber); animation: pulse 2s ease infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.successMsg p { font-size: 0.8rem; color: var(--paper-dim); line-height: 1.7; }
+.resetBtn {
+  background: transparent; border: 1px solid var(--smoke);
+  color: var(--paper-ghost); font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 8px 20px; cursor: pointer; transition: all 0.3s;
+}
+.resetBtn:hover { border-color: var(--amber-dim); color: var(--amber); }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; gap: 48px; }
+  .posterWrap { transform: translateY(40px) rotate(-1deg) !important; }
+  .posterVisible { transform: translateY(0) rotate(-1deg) !important; }
+  .contact { padding: 90px 24px 100px; }
+  .formPanel { padding: 28px 20px; }
+  .row { grid-template-columns: 1fr; }
+  .submitBtn { align-self: stretch; justify-content: center; }
+}

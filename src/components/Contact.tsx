@@ -1,186 +1,211 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Mail, MessageCircle, MapPin, Phone, Github, Linkedin, Send } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Mail, Github, Linkedin } from "lucide-react";
+
+const CONTACT_LINKS = [
+  {
+    label: "Email",
+    value: "hello@yourmail.com",
+    href: "mailto:hello@yourmail.com",
+    icon: "mail",
+  },
+  {
+    label: "GitHub",
+    value: "github.com/yourname",
+    href: "https://github.com/yourname",
+    icon: "github",
+  },
+  {
+    label: "LinkedIn",
+    value: "linkedin.com/in/yourname",
+    href: "https://linkedin.com/in/yourname",
+    icon: "linkedin",
+  },
+];
+
+const ICON_MAP: any = {
+  mail: Mail,
+  github: Github,
+  linkedin: Linkedin,
+};
 
 const Contact = () => {
-  const contactInfo = [
-    {
-      icon: <Mail className="w-5 h-5" />,
-      title: "Email",
-      value: "ignatiusdariel@gmail.com",
-      action: "mailto:ignatiusdariel@gmail.com"
-    },
-    // {
-    //   icon: <Phone className="w-5 h-5" />,
-    //   title: "Phone",
-    //   value: "+1 (555) 123-4567",
-    //   action: "tel:+15551234567"
-    // },
-    {
-      icon: <MapPin className="w-5 h-5" />,
-      title: "Location",
-      value: "Bandung, Indonesia",
-      action: null
-    }
-  ];
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [posterVisible, setPosterVisible] = useState(false);
+  const [formVisible, setFormVisible] = useState(false);
 
-  const socialLinks = [
-    {
-      icon: <Github className="w-5 h-5" />,
-      name: "GitHub",
-      href: "#",
-      color: "hover:text-primary"
-    },
-    {
-      icon: <Linkedin className="w-5 h-5" />,
-      name: "LinkedIn",
-      href: "#",
-      color: "hover:text-accent"
-    },
-    {
-      icon: <MessageCircle className="w-5 h-5" />,
-      name: "Discord",
-      href: "#",
-      color: "hover:text-primary"
-    }
-  ];
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setPosterVisible(true);
+          setTimeout(() => setFormVisible(true), 300);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section className="py-24 bg-background">
-      <div className="container mx-auto px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16 animate-fade-in">
-            <Badge variant="outline" className="mb-4 text-muted-foreground border-muted">
-              Get In Touch
-            </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Let's Work <span className="text-primary">Together</span>
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              I'm always open to discussing new opportunities, exciting projects, 
-              or just having a conversation about technology and development.
-            </p>
-          </div>
+    <section id="contact" ref={sectionRef} className="contact ">
+      <div className="sectionLabel">— Frame 005 · Transmission End —</div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
-            {/* Contact Information */}
-            <div className="space-y-6">
-              <div className="animate-slide-up">
-                <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
-                <div className="space-y-4">
-                  {contactInfo.map((info, index) => (
-                    <div key={index} className="flex items-center gap-4 group">
-                      <div className="p-3 rounded-lg bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">
-                        {info.icon}
-                      </div>
-                      <div>
-                        <p className="font-medium">{info.title}</p>
-                        {info.action ? (
-                          <a 
-                            href={info.action}
-                            className="text-muted-foreground hover:text-primary transition-colors"
-                          >
-                            {info.value}
-                          </a>
-                        ) : (
-                          <p className="text-muted-foreground">{info.value}</p>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="animate-slide-up" style={{ animationDelay: '0.2s' }}>
-                <h3 className="text-xl font-bold mb-4">Follow Me</h3>
-                <div className="flex gap-4">
-                  {socialLinks.map((social, index) => (
-                    <a
-                      key={index}
-                      href={social.href}
-                      className={`p-3 rounded-lg bg-card border border-border hover:shadow-glow transition-all duration-300 hover:-translate-y-1 ${social.color}`}
-                      aria-label={social.name}
-                    >
-                      {social.icon}
-                    </a>
-                  ))}
-                </div>
-              </div>
-
-              <Card className="bg-gradient-primary text-primary-foreground animate-slide-up" style={{ animationDelay: '0.4s' }}>
-                <CardContent className="p-6">
-                  <h4 className="font-bold mb-2">Quick Response</h4>
-                  <p className="text-sm text-primary-foreground/80">
-                    I typically respond to emails within 24 hours. For urgent matters, feel free to reach out via phone.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Contact Form */}
-            <div className="lg:col-span-2">
-              <Card className="bg-card/50 backdrop-blur-sm border-border/50 animate-slide-up" style={{ animationDelay: '0.3s' }}>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Send className="w-5 h-5 text-primary" />
-                    Send Me a Message
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium">Name</label>
-                      <Input 
-                        placeholder="Your full name" 
-                        className="bg-background/50 border-border/50 focus:border-primary/50"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium">Email</label>
-                      <Input 
-                        type="email" 
-                        placeholder="ignatiusdariel@gmail.com"
-                        className="bg-background/50 border-border/50 focus:border-primary/50"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Subject</label>
-                    <Input 
-                      placeholder="What's this about?"
-                      className="bg-background/50 border-border/50 focus:border-primary/50"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Message</label>
-                    <Textarea 
-                      placeholder="Tell me about your project or idea..." 
-                      rows={6}
-                      className="bg-background/50 border-border/50 focus:border-primary/50 resize-none"
-                    />
-                  </div>
-
-                  <Button variant="hero" size="lg" className="w-full">
-                    <Send className="w-4 h-4 mr-2" />
-                    Send Message
-                  </Button>
-
-                  <p className="text-xs text-muted-foreground text-center">
-                    By sending a message, you agree to my privacy policy and terms of service.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
+      <div className="layout">
+        <div className={posterVisible ? "posterWrap posterVisible" : "posterWrap"}>
+          <WantedPoster />
         </div>
+
+        <ContactForm visible={formVisible} />
       </div>
     </section>
   );
 };
 
 export default Contact;
+
+/* ================= POSTER ================= */
+
+const WantedPoster = () => {
+  return (
+    <div className="poster">
+      <div className="posterTexture" />
+
+      <div className="posterInner">
+        <p className="posterBadge">✦ WANTED ✦</p>
+        <p className="posterSubBadge">BY THE ORDER OF THE DARK WEB</p>
+
+        <div className="posterPhoto">
+          <div className="posterSilhouette">
+            <div className="silHead" />
+            <div className="silBody" />
+          </div>
+          <div className="posterPhotoLabel">SUBJECT UNKNOWN</div>
+        </div>
+
+        <h2 className="posterName">
+          Let's <span className="posterAccent">Build</span>
+          <br />
+          Something
+          <br />
+          Dark.
+        </h2>
+
+        <div className="posterDivider">— ✦ —</div>
+
+        <p className="posterDesc">
+          Full Stack Developer
+          <br />
+          <span className="posterDescSub">
+            Last seen shipping clean code at midnight
+          </span>
+        </p>
+
+        <div className="posterReward">
+          <span className="rewardLabel">REWARD</span>
+          <span className="rewardAmt">A Great Product</span>
+        </div>
+
+        <div className="posterLinks">
+          {CONTACT_LINKS.map(({ label, value, href, icon }) => {
+            const Icon = ICON_MAP[icon];
+            return (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="posterLink"
+              >
+                <span className="posterLinkIcon">
+                  <Icon className="icon" />
+                </span>
+                <span className="posterLinkText">{value}</span>
+              </a>
+            );
+          })}
+        </div>
+
+        <p className="posterFooter">DEAD OR ALIVE — PREFERABLY HIRED</p>
+      </div>
+
+      <div className="pin pinTL" />
+      <div className="pin pinTR" />
+      <div className="pin pinBL" />
+      <div className="pin pinBR" />
+    </div>
+  );
+};
+
+/* ================= FORM ================= */
+
+const ContactForm = ({ visible }: { visible: boolean }) => {
+  const [status, setStatus] = useState<"idle" | "sending" | "success">("idle");
+  const [error, setError] = useState("");
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    setStatus("sending");
+    setError("");
+
+    setTimeout(() => {
+      setStatus("success");
+    }, 1400);
+  };
+
+  return (
+    <div className={visible ? "formPanel formVisible" : "formPanel"}>
+      <p className="formEyebrow">// Send a Direct Transmission</p>
+
+      {status === "success" ? (
+        <div className="successMsg">
+          <span className="successIcon">✦</span>
+          <p>
+            Transmission received.
+            <br />
+            I'll respond within 24 hours.
+          </p>
+          <button className="resetBtn" onClick={() => setStatus("idle")}>
+            Send another →
+          </button>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="form" noValidate>
+          <div className="row">
+            <div className="field">
+              <label className="label">Name</label>
+              <input className="input" required />
+            </div>
+
+            <div className="field">
+              <label className="label">Email</label>
+              <input type="email" className="input" required />
+            </div>
+          </div>
+
+          <div className="field">
+            <label className="label">Message</label>
+            <textarea className="textarea" rows={5} required />
+          </div>
+
+          {error && <p className="errorMsg">{error}</p>}
+
+          <button type="submit" className="submitBtn" disabled={status === "sending"}>
+            {status === "sending" ? (
+              <>
+                <span className="spinner" />
+                Transmitting...
+              </>
+            ) : (
+              <>
+                Send Transmission
+                <span className="arrow">→</span>
+              </>
+            )}
+          </button>
+        </form>
+      )}
+    </div>
+  );
+};
