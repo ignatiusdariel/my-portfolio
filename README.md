@@ -98,18 +98,13 @@ All content lives in **`src/data/index.ts`**. Edit that one file to update your 
 
 ## Deployment
 
-Open [Lovable](https://lovable.dev/projects/af5c10ce-db4e-4910-a28d-7fc3ee999296) and click **Share → Publish**.
-
 To connect a custom domain: **Project → Settings → Domains → Connect Domain**.
-See [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide).
 
 ---
 
 ## Editing Options
 
-**Lovable (recommended)** — visit the [Lovable Project](https://lovable.dev/projects/af5c10ce-db4e-4910-a28d-7fc3ee999296) and prompt changes directly. Commits automatically.
-
-**Local IDE** — clone, edit, push. Changes sync back to Lovable.
+**Local IDE** — clone, edit, push. 
 
 **GitHub** — edit files directly in the browser using the pencil icon.
 
