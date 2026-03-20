@@ -2,7 +2,7 @@ const Skills = () => {
   return (
     <>
       {/* Section Divider */}
-      <div className="divider">— Frame 004 · Operational Record —</div>
+      <div className="divider">— Page 004 · Operational Record —</div>
 
       <section id="resume">
         <h2>

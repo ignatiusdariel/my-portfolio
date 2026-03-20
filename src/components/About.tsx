@@ -1,10 +1,14 @@
+import React from "react";
+import { FaReact, FaDocker, FaGitAlt } from "react-icons/fa";
+import { SiFlutter, SiKotlin, SiTypescript, SiNodedotjs } from "react-icons/si";
+
 const About = () => {
   return (
     <>
       <div>
 
         {/* Section Divider */}
-        <div className="divider">— Frame 002 · Subject Profile —</div>
+        <div className="divider">— Page 002 · Subject Profile —</div>
 
         <section className="about-section">
           {/* Left: Dossier Card */}
@@ -20,17 +24,17 @@ const About = () => {
 
             <div className="df">
               <div className="df-l">Specialization</div>
-              <div className="df-v">Full Stack Engineering</div>
+              <div className="df-v">Mobile Application Engineering</div>
             </div>
 
             <div className="df">
               <div className="df-l">Base of Operations</div>
-              <div className="df-v">Singapore</div>
+              <div className="df-v">Indonesia</div>
             </div>
 
             <div className="df">
               <div className="df-l">Years Active</div>
-              <div className="df-v">5+ Years Field Experience</div>
+              <div className="df-v">3+ Years Field Experience</div>
             </div>
 
             <div className="df">
@@ -54,68 +58,47 @@ const About = () => {
             </h2>
 
             <p>
-              I build systems that work in the shadows —{" "}
-              <strong>
-                clean architecture, ruthless efficiency, zero tolerance for bloat.
-              </strong>{" "}
-              My code doesn't just run; it endures.
+              I build reliable, user-focused software with a strong emphasis on <strong>clean architecture, performance, and maintainable systems</strong>. My experience spans <strong>mobile and web application development</strong>, where I translate product requirements into scalable solutions that balance thoughtful engineering with practical business needs.
             </p>
 
             <p>
-              Five years navigating the labyrinth of full-stack development.
-              Shipped products used by thousands, architected APIs handling
-              millions of requests, survived more legacy codebases than any person
-              should.
+              With a front-end engineering focus, I specialize in developing <strong>responsive interfaces, scalable application structures, and efficient data flows</strong>. I contribute across the product lifecycle — from feature development and system improvements to <strong>performance optimization and application deployment</strong> — delivering stable, polished applications that adapt to real-world product demands in fast-paced startup environments.
             </p>
 
-            <p>
-              The best software is invisible — it simply works, letting people do
-              what they came to do.{" "}
-              <strong>That's the mission. Every time.</strong>
-            </p>
 
-            {/* Skill Bars */}
-            <div className="skill-bars">
-              <div className="skill-row">
-                <span className="skill-name">Frontend</span>
-                <div className="skill-track">
-                  <div className="skill-fill" style={{ width: "92%" }} />
-                </div>
-                <span className="skill-pct">92%</span>
-              </div>
-
-              <div className="skill-row">
-                <span className="skill-name">Backend</span>
-                <div className="skill-track">
-                  <div className="skill-fill" style={{ width: "88%" }} />
-                </div>
-                <span className="skill-pct">88%</span>
-              </div>
-
-              <div className="skill-row">
-                <span className="skill-name">DevOps</span>
-                <div className="skill-track">
-                  <div className="skill-fill" style={{ width: "74%" }} />
-                </div>
-                <span className="skill-pct">74%</span>
-              </div>
-
-              <div className="skill-row">
-                <span className="skill-name">Databases</span>
-                <div className="skill-track">
-                  <div className="skill-fill" style={{ width: "83%" }} />
-                </div>
-                <span className="skill-pct">83%</span>
-              </div>
-
-              <div className="skill-row">
-                <span className="skill-name">System Design</span>
-                <div className="skill-track">
-                  <div className="skill-fill" style={{ width: "79%" }} />
-                </div>
-                <span className="skill-pct">79%</span>
-              </div>
-            </div>
+            {/* Skill Reel */}
+<div className="skill-reel-wrap">
+  <div className="skill-scroll">
+    {[...Array(2)].map((_, idx) => (
+      <React.Fragment key={idx}>
+        <div className="skill-item">
+          <SiFlutter className="skill-icon" />
+          <span>Flutter</span>
+        </div>
+        <div className="skill-item">
+          <SiKotlin className="skill-icon" />
+          <span>Kotlin</span>
+        </div>
+        <div className="skill-item">
+          <FaReact className="skill-icon" />
+          <span>React</span>
+        </div>
+        <div className="skill-item">
+          <SiTypescript className="skill-icon" />
+          <span>TypeScript</span>
+        </div>
+        <div className="skill-item">
+          <SiNodedotjs className="skill-icon" />
+          <span>Node.js</span>
+        </div>
+        <div className="skill-item">
+          <FaGitAlt className="skill-icon" />
+          <span>Git</span>
+        </div>
+      </React.Fragment>
+    ))}
+  </div>
+</div>
           </div>
         </section>
       </div>

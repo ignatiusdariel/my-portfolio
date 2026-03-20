@@ -1,8 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ArrowDown, Code, Smartphone, Globe } from "lucide-react";
-import heroImage from "@/assets/hero-bg.jpg";
-
 const Hero = () => {
   return (
     <section id="hero">
@@ -11,15 +6,15 @@ const Hero = () => {
       </div>
 
       <h1 className="hero-title">
-        Full
+        <span className="acc">Software</span>
         <br />
-        <span className="acc">Stack</span>
-        <br />
-        Developer
+        Engineer
       </h1>
 
       <div className="hero-role">
-        // Architect of digital noir —
+        // Portfolio of a {" "}
+        <span style={{ color: "white" ,background: "var(--amber-bright)" }}>Front-End Developer</span>
+        {" "} —
       </div>
 
       <div className="term">
@@ -29,7 +24,7 @@ const Hero = () => {
 
       <div className="term">
         <span className="p">→</span>
-        <span style={{ color: "var(--amber)" }}>j.noir</span>
+        <span style={{ color: "var(--amber)" }}>ign.dariel</span>
         <span className="c">&nbsp;| dev | builder | problem_solver</span>
       </div>
 
@@ -46,12 +41,12 @@ const Hero = () => {
       </div>
 
       <div className="hero-stack">
+        <div className="si">Flutter</div>
+        <div className="si">Kotlin</div>
         <div className="si">React</div>
         <div className="si">Node.js</div>
         <div className="si">TypeScript</div>
-        <div className="si">Python</div>
-        <div className="si">PostgreSQL</div>
-        <div className="si">Docker</div>
+        <div className="si">Git</div>
       </div>
 
       <div

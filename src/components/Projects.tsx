@@ -1,135 +1,149 @@
-import React from "react";
+import { useEffect, useRef, useState } from 'react';
+import { Project, PROJECTS } from '@/data/data';
+import CaseBoard from './CaseBoard';
 
-const Projects = () => {
-  const projects = [
-    {
-      title: "NightWatch",
-      tags: ["React", "Node.js", "MongoDB"],
-      num: "001",
-      code: `const watch = createServer({
-  port: 3000,
-  middleware: [auth, cors],
-  routes: loadRoutes('./api')
-});
-watch.listen();`,
-    },
-    {
-      title: "Cipher API",
-      tags: ["Python", "FastAPI", "Redis"],
-      num: "002",
-      code: `@app.post("/encrypt")
-async def encrypt(data):
-  key = derive_key(SECRET)
-  return {"cipher": aes_enc(data, key)}`,
-    },
-    {
-      title: "ShadowDB",
-      tags: ["PostgreSQL", "TypeScript", "ORM"],
-      num: "003",
-      code: `const q = db
-  .select('*')
-  .from('missions')
-  .where('status','active')
-  .orderBy('priority','desc')
-  .limit(20);`,
-    },
-    {
-      title: "Dossier App",
-      tags: ["Next.js", "Tailwind", "Supabase"],
-      num: "004",
-      code: `export default function Page() {
-  const [data] = useDossier(id);
+const SPROCKET_COUNT = 17;
+
+// ── Sprocket row ────────────────────────────────────────────
+function SprocketRow() {
   return (
-    <Layout>
-      <FileView data={data} />
-    </Layout>
+    <div className={"sprRow"}>
+      {Array.from({ length: SPROCKET_COUNT }).map((_, i) => (
+        <div key={i} className={"sprH"} />
+      ))}
+    </div>
   );
-}`,
-    },
-    {
-      title: "ReconBot",
-      tags: ["Python", "Selenium", "Lambda"],
-      num: "005",
-      code: `def run_mission(target):
-  driver = init_headless()
-  data = extract(driver, target)
-  store_s3(data)
-  return {"status": "ok"}`,
-    },
-    {
-      title: "GridLine",
-      tags: ["React", "D3.js", "WebSockets"],
-      num: "006",
-      code: `const ws = new WebSocket(WS_URL);
-ws.onmessage = (e) => {
-  const {x,y,v} = parse(e.data);
-  chart.update({x,y,v});
-};`,
-    },
-  ];
+}
 
-  const doubled = [...projects, ...projects]; // infinite reel illusion
+// ── Single film cell ────────────────────────────────────────
+function FilmCell({ project, onOpen }: { project: Project; onOpen: (p: Project) => void }) {
+  return (
+    <div className={"frameUnit"}>
+      <SprocketRow />
+      <div
+        className={"cell"}
+        onClick={() => onOpen(project)}
+        role="button"
+        tabIndex={0}
+        aria-label={`Open case file: ${project.title}`}
+        onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') onOpen(project); }}
+      >
+        <span className={"cellNum"}>{project.num} ▲</span>
+        <span className={"cellExp"}>ISO 400</span>
+
+        {/* Default bg */}
+        <div className={"cellBg"}>
+          <span className={"projIcon"}>⬡</span>
+        </div>
+
+        {/* Code preview on hover */}
+        <div className={"codePreview"}>
+          <pre className={"pre"}>{project.code}</pre>
+        </div>
+
+        {/* Overlay */}
+        <div className={"cellOverlay"}>
+          <span className={"cellTitle"}>{project.title}</span>
+          <div className={"cellTags"}>
+            {project.tags.map(tag => (
+              <span key={tag} className={"cellTag"}>{tag}</span>
+            ))}
+          </div>
+          <span className={"openHint"}>// click to open case file</span>
+        </div>
+      </div>
+      <SprocketRow />
+    </div>
+  );
+}
+
+// ── Phase type ──────────────────────────────────────────────
+type Phase = 'entering' | 'open' | 'exiting';
+
+// ── Film Reel section ───────────────────────────────────────
+const DOUBLED = [...PROJECTS, ...PROJECTS];
+
+export default function FilmReel() {
+  const headRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  const [selected, setSelected] = useState<Project | null>(null);
+  const [phase, setPhase] = useState<Phase>('entering');
+  const [paused, setPaused] = useState(false);
+
+  // Scroll reveal for header
+  useEffect(() => {
+    const el = headRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) el.classList.add('visible'); },
+      { threshold: 0.1 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  // Pause reel animation while case board is open
+  useEffect(() => {
+    if (trackRef.current) {
+      trackRef.current.style.animationPlayState = paused ? 'paused' : 'running';
+    }
+  }, [paused]);
+
+  // Open a case
+  const openCase = (project: Project) => {
+    setSelected(project);
+    setPhase('entering');
+    setPaused(true);
+    // tiny delay so overlay mounts, then transition to 'open'
+    requestAnimationFrame(() => {
+      setTimeout(() => setPhase('open'), 30);
+    });
+    document.body.style.overflow = 'hidden';
+  };
+
+  // Close the case
+  const closeCase = () => {
+    setPhase('exiting');
+    setTimeout(() => {
+      setSelected(null);
+      setPhase('entering');
+      setPaused(false);
+      document.body.style.overflow = '';
+    }, 400);
+  };
 
   return (
     <>
-      <div className="divider">— Frame 003 · Reel of Work —</div>
+      {/* Section Divider */}
+      <div className="divider">— Page 003 · Reel of Work —</div>
 
-      <section id="work">
-        <div className="work-head reveal">
-          <h2>The Reel</h2>
-          <p>// Projects developed, shipped, survived — hover to inspect</p>
+      <section id="work" className={"section"}>
+        <div ref={headRef} className={`projects-head`}>
+          <h2 className={"heading"}>List of projects</h2>
+          <p className={"sub"}>// Click any frame to open the case file</p>
         </div>
 
-        <div className="reel-wrap">
-          <div className="reel-track">
-            {doubled.map((p, i) => (
-              <React.Fragment key={i}>
-                <div className="frame-unit">
-                  <div className="spr-row">
-                    {Array.from({ length: 17 }).map((_, i) => (
-                      <div key={i} className="spr-h" />
-                    ))}
-                  </div>
-
-                  <div className="film-cell">
-                    <span className="cell-num">{p.num} ▲</span>
-                    <span className="cell-exp">ISO 400</span>
-
-                    <div className="cell-bg">
-                      <span className="pi">⬡</span>
-                    </div>
-
-                    <div className="code-preview">
-                      <pre>{p.code}</pre>
-                    </div>
-
-                    <div className="cell-overlay">
-                      <span className="cell-title">{p.title}</span>
-                      <div className="cell-tags">
-                        {p.tags.map((t, idx) => (
-                          <span key={idx} className="cell-tag">
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="spr-row">
-                    {Array.from({ length: 17 }).map((_, i) => (
-                      <div key={i} className="spr-h" />
-                    ))}
-                  </div>
-                </div>
-
-                <div className="frame-sep" />
-              </React.Fragment>
+        <div className={"reelWrap"}>
+          <div ref={trackRef} className={"reelTrack"}>
+            {DOUBLED.map((project, i) => (
+              <div key={i} className={"frameGroup"}>
+                <FilmCell project={project} onOpen={openCase} />
+                <div className={"frameSep"} />
+              </div>
             ))}
           </div>
         </div>
       </section>
+
+      {/* Case board portal */}
+      {selected && (
+        <CaseBoard
+          project={selected}
+          onClose={closeCase}
+          phase={phase}
+        />
+      )}
     </>
   );
-};
-
-export default Projects;
+}

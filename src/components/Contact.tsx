@@ -50,7 +50,7 @@ const Contact = () => {
 
   return (
     <section id="contact" ref={sectionRef} className="contact ">
-      <div className="sectionLabel">— Frame 005 · Transmission End —</div>
+      <div className="sectionLabel">— Page 005 · Transmission End —</div>
 
       <div className="layout">
         <div className={posterVisible ? "posterWrap posterVisible" : "posterWrap"}>
