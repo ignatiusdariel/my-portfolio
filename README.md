@@ -1,73 +1,116 @@
-# Welcome to your Lovable project
+# Ignatius Wirawan — Developer Portfolio
 
-## Project info
+A dark cinematic noir portfolio built with React, TypeScript, and Vite.
+Themed around old roll film, 35mm aesthetics, and murder case pin boards.
 
-**URL**: https://lovable.dev/projects/af5c10ce-db4e-4910-a28d-7fc3ee999296
+---
 
-## How can I edit this code?
+## Live Site
 
-There are several ways of editing your application.
+[ignatiusworkemail@gmail.com](mailto:ignatiusworkemail@gmail.com) · [github.com/ignatiusdariel](https://github.com/ignatiusdariel) · [linkedin.com/in/ignatius-wirawan](https://www.linkedin.com/in/ignatius-wirawan/)
 
-**Use Lovable**
+---
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/af5c10ce-db4e-4910-a28d-7fc3ee999296) and start prompting.
+## Features
 
-Changes made via Lovable will be committed automatically to this repo.
+- **Film roll dashboard** — horizontally scrolling 35mm film reel showcasing projects
+- **Murder case pin board** — clicking a project frame triggers a cinematic projector flash transition into a corkboard detail view with evidence cards, suspect tags, string lines, and polaroids
+- **Wanted poster contact section** — animated wanted poster slides in alongside a contact form wired to EmailJS
+- **Dossier about section** — classified document card with skill reel
+- **Film overlay effects** — grain, vignette, scanlines, scratch lines, sprocket holes, and frame number counter throughout
 
-**Use your preferred IDE**
+---
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Tech Stack
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+| Layer | Technology |
+|---|---|
+| Framework | React 18 + TypeScript |
+| Build tool | Vite |
+| Styling | CSS Modules + Tailwind CSS |
+| UI components | shadcn-ui |
+| Email | EmailJS (`@emailjs/browser`) |
+| Icons | Lucide React, React Icons |
 
-Follow these steps:
+---
 
+## Getting Started
+
+The only requirement is Node.js & npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+# Clone the repo
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
+# Navigate into the project
 cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start the dev server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+---
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Environment — EmailJS
 
-**Use GitHub Codespaces**
+The contact form sends email via EmailJS. Add your credentials directly in `src/components/Contact.tsx`:
+```ts
+const EMAILJS_SERVICE_ID  = 'service_xxxxxxx';
+const EMAILJS_TEMPLATE_ID = 'template_xxxxxxx';
+const EMAILJS_PUBLIC_KEY  = 'xxxxxxxxxxxxxxxxxxxx';
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+To get these: sign up at [emailjs.com](https://emailjs.com) → connect an email service → create a template with variables `{{from_name}}`, `{{from_email}}`, `{{message}}` → copy the three IDs.
 
-## What technologies are used for this project?
+---
 
-This project is built with:
+## Project Structure
+```
+src/
+├── components/
+│   ├── About.tsx          # Dossier card + skill reel
+│   ├── CaseBoard.tsx      # Murder case pin board detail overlay
+│   ├── Contact.tsx        # Wanted poster + EmailJS contact form
+│   ├── FilmReel.tsx       # Scrolling 35mm film strip work gallery
+│   ├── FilmOverlay.tsx    # Grain, scanlines, scratches, sprockets
+│   ├── FilmLeader.tsx     # 3-2-1 countdown intro animation
+│   ├── Hero.tsx           # Landing section
+│   ├── Navbar.tsx
+│   ├── Resume.tsx         # Timeline + tech arsenal grid
+│   └── Footer.tsx
+├── data/
+│   └── index.ts           # All portfolio content — edit here
+├── types/
+│   └── index.ts           # TypeScript interfaces
+└── styles/
+    └── global.css         # CSS variables and base styles
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+---
 
-## How can I deploy this project?
+## Customisation
 
-Simply open [Lovable](https://lovable.dev/projects/af5c10ce-db4e-4910-a28d-7fc3ee999296) and click on Share -> Publish.
+All content lives in **`src/data/index.ts`**. Edit that one file to update your name, projects, experience, skills, and contact links. Each project supports a full case board with `clues`, `suspects`, `role`, `outcome`, `liveUrl`, and `repoUrl`.
 
-## Can I connect a custom domain to my Lovable project?
+---
 
-Yes, you can!
+## Deployment
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Open [Lovable](https://lovable.dev/projects/af5c10ce-db4e-4910-a28d-7fc3ee999296) and click **Share → Publish**.
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+To connect a custom domain: **Project → Settings → Domains → Connect Domain**.
+See [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide).
+
+---
+
+## Editing Options
+
+**Lovable (recommended)** — visit the [Lovable Project](https://lovable.dev/projects/af5c10ce-db4e-4910-a28d-7fc3ee999296) and prompt changes directly. Commits automatically.
+
+**Local IDE** — clone, edit, push. Changes sync back to Lovable.
+
+**GitHub** — edit files directly in the browser using the pencil icon.
+
+**Codespaces** — open the repo → Code → Codespaces → New codespace.
