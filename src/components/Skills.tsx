@@ -15,32 +15,29 @@ const Skills = () => {
             <h3>// Experience</h3>
 
             <div className="ti">
-              <div className="ti-date">2022 — Present</div>
-              <div className="ti-role">Senior Full Stack Engineer</div>
-              <div className="ti-place">Acme Tech Corp</div>
+              <div className="ti-date">2024 — Present</div>
+              <div className="ti-role">Mobile Engineer</div>
+              <div className="ti-place">UR (PT. Rahmat Tuhan Lestari)</div>
               <div className="ti-desc">
-                Led architecture of microservices platform. Reduced API response
-                time by 60%. Managed team of 4 engineers across 3 time zones.
+                Led the full mobile application lifecycle — from concept, development, deployment and maintenance — for multiple projects, contributed to <strong> newer web front-ends</strong>.
               </div>
             </div>
 
             <div className="ti">
-              <div className="ti-date">2020 — 2022</div>
-              <div className="ti-role">Frontend Developer</div>
-              <div className="ti-place">Dark Horse Studio</div>
+              <div className="ti-date">2025 — Present</div>
+              <div className="ti-role">Website Developer</div>
+              <div className="ti-place">Freelance</div>
               <div className="ti-desc">
-                Built React dashboards for fintech clients. Shipped 12+ features
-                per quarter. Introduced TypeScript migration reducing bugs by 40%.
+                Built websites for local businesses, improving online presence and brand visibility.
               </div>
             </div>
 
             <div className="ti">
-              <div className="ti-date">2019 — 2020</div>
-              <div className="ti-role">Junior Developer</div>
-              <div className="ti-place">Freelance / Agency Work</div>
+              <div className="ti-date">2023</div>
+              <div className="ti-role">Mobile Developer (Project)</div>
+              <div className="ti-place">Bangkit Google Academy - Konseria App</div>
               <div className="ti-desc">
-                Delivered 20+ client projects across full stack. Learned fast,
-                broke things faster, fixed everything.
+                Worked on the Android front-end using Jetpack Compose (Kotlin), designing the app's concept, theme, UI/UX, and implementing core features for secure ticket booking and fraud prevention.
               </div>
             </div>
           </div>
@@ -50,22 +47,20 @@ const Skills = () => {
             <h3>// Education</h3>
 
             <div className="ti">
-              <div className="ti-date">2015 — 2019</div>
+              <div className="ti-date">2020 — 2024</div>
               <div className="ti-role">B.Sc. Computer Science</div>
-              <div className="ti-place">University of Somewhere</div>
+              <div className="ti-place">Institut Teknologi Harapan Bangsa</div>
               <div className="ti-desc">
-                Graduated with Honours. Thesis: Distributed systems optimization.
-                Final year project awarded Best in Department.
+                Pursuing a Bachelor of Computer Science in Information Technology. Focused on software development, mobile & web applications, and system optimization.
               </div>
             </div>
 
             <div className="ti">
               <div className="ti-date">2021</div>
-              <div className="ti-role">AWS Solutions Architect</div>
+              <div className="ti-role">AWS Academy Graduate</div>
               <div className="ti-place">Amazon Web Services</div>
               <div className="ti-desc">
-                Certified in cloud architecture, serverless patterns, and
-                infrastructure as code.
+                Completed the AWS Academy Cloud Foundations course, earning the AWS Academy Graduate badge. Gained skill in cloud architecture, serverless patterns, and infrastructure.
               </div>
             </div>
 
@@ -73,10 +68,10 @@ const Skills = () => {
 
             <div className="tech-grid">
               {[
-                "React","Next.js","TypeScript",
-                "Node.js","Python","PostgreSQL",
-                "Redis","Docker","AWS",
-                "GraphQL","Git","Linux"
+                "Flutter", "Kotlin", "IOS",
+                "React", "Node.js", "TypeScript",
+                "Android", "Git", "Java",
+                "Golang", "Python", "PHP"
               ].map((tech, i) => (
                 <div key={i} className="tech-item">{tech}</div>
               ))}

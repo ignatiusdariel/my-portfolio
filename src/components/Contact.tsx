@@ -1,23 +1,24 @@
 import { useEffect, useRef, useState } from "react";
 import { Mail, Github, Linkedin } from "lucide-react";
+import emailjs from '@emailjs/browser';
 
 const CONTACT_LINKS = [
   {
     label: "Email",
-    value: "hello@yourmail.com",
-    href: "mailto:hello@yourmail.com",
+    value: "ignatiusworkemail@gmail.com",
+    href: "mailto:ignatiusworkemail@gmail.com",
     icon: "mail",
   },
   {
     label: "GitHub",
-    value: "github.com/yourname",
-    href: "https://github.com/yourname",
+    value: "github.com/ignatiusdariel",
+    href: "https://github.com/ignatiusdariel",
     icon: "github",
   },
   {
     label: "LinkedIn",
-    value: "linkedin.com/in/yourname",
-    href: "https://linkedin.com/in/yourname",
+    value: "linkedin.com/in/ignatius-wirawan",
+    href: "https://www.linkedin.com/in/ignatius-wirawan/",
     icon: "linkedin",
   },
 ];
@@ -141,18 +142,54 @@ const WantedPoster = () => {
 /* ================= FORM ================= */
 
 const ContactForm = ({ visible }: { visible: boolean }) => {
-  const [status, setStatus] = useState<"idle" | "sending" | "success">("idle");
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    setStatus("sending");
-    setError("");
+  const EMAILJS_SERVICE_ID = 'service_h0ugs88';
+  const EMAILJS_TEMPLATE_ID = 'template_hi1h7jf';
+  const EMAILJS_PUBLIC_KEY = '7gDYlP36yAWUCfwrA';
 
-    setTimeout(() => {
-      setStatus("success");
-    }, 1400);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // basic guard — adjust field names to whatever your state uses
+    if (!form.name?.trim() || !form.email?.trim() || !form.message?.trim()) {
+      setError('All fields are required.');
+      return;
+    }
+
+    setStatus('sending');
+    setError('');
+
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: form.name,
+          from_email: form.email,
+          message: form.message,
+          to_email: 'ignatiusworkemail@gmail.com',
+        },
+        EMAILJS_PUBLIC_KEY,
+      );
+
+      setStatus('success');
+      // reset form fields — adapt to your state shape
+      setForm({ name: '', email: '', message: '' });
+
+    } catch (err) {
+      console.error('EmailJS error:', err);
+      setStatus('error');
+      setError('Transmission failed. Please try again or email me directly.');
+    }
+  };
+
 
   return (
     <div className={visible ? "formPanel formVisible" : "formPanel"}>
@@ -175,33 +212,47 @@ const ContactForm = ({ visible }: { visible: boolean }) => {
           <div className="row">
             <div className="field">
               <label className="label">Name</label>
-              <input className="input" required />
+              <input
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                className="input"
+                required
+              />
             </div>
 
             <div className="field">
               <label className="label">Email</label>
-              <input type="email" className="input" required />
+              <input
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                className="input"
+                required
+              />
             </div>
           </div>
 
           <div className="field">
             <label className="label">Message</label>
-            <textarea className="textarea" rows={5} required />
+            <textarea
+              name="message"
+              value={form.message}
+              onChange={handleChange}
+              className="textarea"
+              rows={5}
+              required
+            />
           </div>
 
           {error && <p className="errorMsg">{error}</p>}
 
           <button type="submit" className="submitBtn" disabled={status === "sending"}>
             {status === "sending" ? (
-              <>
-                <span className="spinner" />
-                Transmitting...
-              </>
+              <><span className="spinner" />Transmitting...</>
             ) : (
-              <>
-                Send Transmission
-                <span className="arrow">→</span>
-              </>
+              <>Send Transmission <span className="arrow">→</span></>
             )}
           </button>
         </form>
