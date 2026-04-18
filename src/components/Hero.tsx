@@ -1,6 +1,11 @@
+import heroBg from '../assets/hero-bg.png';
+
 const Hero = () => {
   return (
     <section id="hero">
+
+      <div className="hero-bg" style={{ backgroundImage: `url(${heroBg})` }} />
+
       <div className="hero-eyebrow">
         Dossier No. 001 — Developer Portfolio
       </div>
@@ -13,7 +18,7 @@ const Hero = () => {
 
       <div className="hero-role">
         // Portfolio of a {" "}
-        <span style={{ color: "white" ,background: "var(--amber-bright)" }}>Front-End Developer</span>
+        <span style={{ color: "white", background: "var(--amber-bright)" }}>Front-End Developer</span>
         {" "} —
       </div>
 

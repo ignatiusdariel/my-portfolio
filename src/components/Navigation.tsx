@@ -28,7 +28,7 @@ const Navigation = () => {
           className="w-6 h-6 sm:w-7 sm:h-7 object-contain mr-2"
         />
         <div className="nav-id">
-          <span className="codename">IGNATIUS</span>
+          <span className="codename">IGNATIUS DARIEL</span>
           <span className="clearance">Clearance Level: FRONT-END DEV</span>
         </div>
       </div>

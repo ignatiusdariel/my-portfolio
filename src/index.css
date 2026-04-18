@@ -412,6 +412,40 @@ a:hover{
   z-index:1;
 }
 
+.hero-bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  z-index: 0;
+
+  /* your photo */
+  background-image: url('/hero-bg.jpeg');
+  background-size: 150%;
+  background-repeat: no-repeat;
+  background-position: 40% center;  
+  opacity: 0.4; 
+
+  /* bottom fade + dark overlay combined */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 40%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    black 40%,
+    transparent 100%
+  );
+}
+
+/* make sure all hero text sits above the bg */
+#hero > *:not(.hero-bg) {
+  position: relative;
+  z-index: 1;
+}
+
 .hero-eyebrow{
   font-size:.58rem;
   letter-spacing:.4em;
