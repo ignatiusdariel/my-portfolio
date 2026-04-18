@@ -6,6 +6,7 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import DottedCursor from "./components/DottedCursor";
+import DetailedProjectsPage from "./components/DetailedProjects";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +44,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/projects"  element={<DetailedProjectsPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </HashRouter>

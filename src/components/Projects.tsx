@@ -1,55 +1,52 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Project, PROJECTS } from '@/data/data';
 import CaseBoard from './CaseBoard';
 
 const SPROCKET_COUNT = 17;
 
-// ── Sprocket row ────────────────────────────────────────────
 function SprocketRow() {
   return (
-    <div className={"sprRow"}>
+    <div className="sprRow">
       {Array.from({ length: SPROCKET_COUNT }).map((_, i) => (
-        <div key={i} className={"sprH"} />
+        <div key={i} className="sprH" />
       ))}
     </div>
   );
 }
 
-// ── Single film cell ────────────────────────────────────────
 function FilmCell({ project, onOpen }: { project: Project; onOpen: (p: Project) => void }) {
   return (
-    <div className={"frameUnit"}>
+    <div className="frameUnit">
       <SprocketRow />
       <div
-        className={"cell"}
+        className="cell"
         onClick={() => onOpen(project)}
         role="button"
         tabIndex={0}
         aria-label={`Open case file: ${project.title}`}
         onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') onOpen(project); }}
       >
-        <span className={"cellNum"}>{project.num} ▲</span>
-        <span className={"cellExp"}>ISO 400</span>
+        <span className="cellNum">{project.num} ▲</span>
+        <span className="cellExp">ISO 400</span>
 
-        {/* Default bg */}
-        <div className={"cellBg"}>
-          <span className={"projIcon"}>⬡</span>
+        {/* ── Project image fills the cell ── */}
+        <div className="cellImg">
+          <img
+            src={project.previewUrl}
+            alt={project.title}
+            loading="lazy"
+          />
         </div>
 
-        {/* Code preview on hover */}
-        <div className={"codePreview"}>
-          <pre className={"pre"}>{project.code}</pre>
-        </div>
-
-        {/* Overlay */}
-        <div className={"cellOverlay"}>
-          <span className={"cellTitle"}>{project.title}</span>
-          <div className={"cellTags"}>
-            {project.tags.map(tag => (
-              <span key={tag} className={"cellTag"}>{tag}</span>
+        <div className="cellOverlay">
+          <span className="cellTitle">{project.title}</span>
+          <div className="cellTags">
+            {project.tags.slice(0, 3).map(tag => (
+              <span key={tag} className="cellTag">{tag}</span>
             ))}
           </div>
-          <span className={"openHint"}>// click to open case file</span>
+          <span className="openHint">// click to open case file</span>
         </div>
       </div>
       <SprocketRow />
@@ -57,21 +54,65 @@ function FilmCell({ project, onOpen }: { project: Project; onOpen: (p: Project) 
   );
 }
 
-// ── Phase type ──────────────────────────────────────────────
 type Phase = 'entering' | 'open' | 'exiting';
-
-// ── Film Reel section ───────────────────────────────────────
 const DOUBLED = [...PROJECTS, ...PROJECTS];
 
 export default function FilmReel() {
-  const headRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+  const headRef  = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const wrapRef  = useRef<HTMLDivElement>(null);
 
   const [selected, setSelected] = useState<Project | null>(null);
-  const [phase, setPhase] = useState<Phase>('entering');
-  const [paused, setPaused] = useState(false);
+  const [phase,    setPhase]    = useState<Phase>('entering');
 
-  // Scroll reveal for header
+  // ── animation offset tracking ────────────────────────────
+  const animPaused    = useRef(false);
+  const currentOffset = useRef(0);  // px translated so far
+  const rafId         = useRef<number>(0);
+  const lastTime      = useRef<number>(0);
+  const SPEED         = 0.05; // px per ms at 1× — adjust to taste
+
+  // drag state
+  const isDragging   = useRef(false);
+  const dragStartX   = useRef(0);
+  const dragStartOff = useRef(0);
+
+  // track total width of one set (half of doubled)
+  const getHalfWidth = useCallback(() => {
+    if (!trackRef.current) return 0;
+    return trackRef.current.scrollWidth / 2;
+  }, []);
+
+  const applyOffset = (offset: number) => {
+    const half = getHalfWidth();
+    if (half === 0) return;
+    // wrap so it loops seamlessly
+    const wrapped = ((offset % half) + half) % half;
+    currentOffset.current = wrapped;
+    if (trackRef.current) {
+      trackRef.current.style.transform = `translateX(-${wrapped}px)`;
+    }
+  };
+
+  // animation loop
+  const animate = useCallback((time: number) => {
+    if (lastTime.current) {
+      const delta = time - lastTime.current;
+      if (!animPaused.current && !isDragging.current) {
+        applyOffset(currentOffset.current + SPEED * delta);
+      }
+    }
+    lastTime.current = time;
+    rafId.current = requestAnimationFrame(animate);
+  }, []);
+
+  useEffect(() => {
+    rafId.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(rafId.current);
+  }, [animate]);
+
+  // scroll reveal
   useEffect(() => {
     const el = headRef.current;
     if (!el) return;
@@ -83,66 +124,114 @@ export default function FilmReel() {
     return () => obs.disconnect();
   }, []);
 
-  // Pause reel animation while case board is open
-  useEffect(() => {
-    if (trackRef.current) {
-      trackRef.current.style.animationPlayState = paused ? 'paused' : 'running';
-    }
-  }, [paused]);
+  // ── drag handlers ────────────────────────────────────────
+  const onDragStart = (clientX: number) => {
+    isDragging.current = true;
+    dragStartX.current   = clientX;
+    dragStartOff.current = currentOffset.current;
+    if (wrapRef.current) wrapRef.current.style.cursor = 'grabbing';
+  };
 
-  // Open a case
+  const onDragMove = (clientX: number) => {
+    if (!isDragging.current) return;
+    const delta = dragStartX.current - clientX; // drag left = scroll forward
+    applyOffset(dragStartOff.current + delta);
+  };
+
+  const onDragEnd = () => {
+    isDragging.current = false;
+    if (wrapRef.current) wrapRef.current.style.cursor = 'grab';
+  };
+
+  // mouse events
+  const onMouseDown = (e: React.MouseEvent) => onDragStart(e.clientX);
+  const onMouseMove = (e: React.MouseEvent) => onDragMove(e.clientX);
+  const onMouseUp   = () => onDragEnd();
+  const onMouseLeave= () => { onDragEnd(); animPaused.current = false; };
+
+  // touch events
+  const onTouchStart = (e: React.TouchEvent) => onDragStart(e.touches[0].clientX);
+  const onTouchMove  = (e: React.TouchEvent) => onDragMove(e.touches[0].clientX);
+  const onTouchEnd   = () => onDragEnd();
+
+  // cell hover pause/resume
+  const onCellEnter = () => { animPaused.current = true; };
+  const onCellLeave = () => { if (!isDragging.current) animPaused.current = false; };
+
+  // open/close case board
   const openCase = (project: Project) => {
     setSelected(project);
     setPhase('entering');
-    setPaused(true);
-    // tiny delay so overlay mounts, then transition to 'open'
-    requestAnimationFrame(() => {
-      setTimeout(() => setPhase('open'), 30);
-    });
+    animPaused.current = true;
+    requestAnimationFrame(() => setTimeout(() => setPhase('open'), 30));
     document.body.style.overflow = 'hidden';
   };
 
-  // Close the case
   const closeCase = () => {
     setPhase('exiting');
     setTimeout(() => {
       setSelected(null);
       setPhase('entering');
-      setPaused(false);
+      animPaused.current = false;
       document.body.style.overflow = '';
     }, 400);
   };
 
   return (
     <>
-      {/* Section Divider */}
       <div className="divider">— Page 003 · Reel of Work —</div>
 
-      <section id="work" className={"section"}>
-        <div ref={headRef} className={`projects-head`}>
-          <h2 className={"heading"}>List of projects</h2>
-          <p className={"sub"}>// Click any frame to open the case file</p>
+      <section id="work" className="section">
+        <div ref={headRef} className="projects-head">
+          <div className="projects-head-row">
+            <div>
+              <h2 className="heading">List of projects</h2>
+              <p className="sub">// Click any frame to open the case file — drag to scroll</p>
+            </div>
+            <button
+              className="showAllBtn"
+              onClick={() => navigate('/projects')}
+            >
+              Show All →
+            </button>
+          </div>
         </div>
 
-        <div className={"reelWrap"}>
-          <div ref={trackRef} className={"reelTrack"}>
+        <div
+          ref={wrapRef}
+          className="reelWrap"
+          style={{ cursor: 'grab' }}
+          onMouseDown={onMouseDown}
+          onMouseMove={onMouseMove}
+          onMouseUp={onMouseUp}
+          onMouseLeave={onMouseLeave}
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+        >
+          {/* override CSS animation — JS drives transform now */}
+          <div
+            ref={trackRef}
+            className="reelTrack"
+            style={{ animation: 'none', willChange: 'transform' }}
+          >
             {DOUBLED.map((project, i) => (
-              <div key={i} className={"frameGroup"}>
+              <div
+                key={i}
+                className="frameGroup"
+                onMouseEnter={onCellEnter}
+                onMouseLeave={onCellLeave}
+              >
                 <FilmCell project={project} onOpen={openCase} />
-                <div className={"frameSep"} />
+                <div className="frameSep" />
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Case board portal */}
       {selected && (
-        <CaseBoard
-          project={selected}
-          onClose={closeCase}
-          phase={phase}
-        />
+        <CaseBoard project={selected} onClose={closeCase} phase={phase} />
       )}
     </>
   );
