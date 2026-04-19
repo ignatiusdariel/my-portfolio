@@ -34,7 +34,7 @@ const About = () => {
 
             <div className="df">
               <div className="df-l">Years Active</div>
-              <div className="df-v">3+ Years Field Experience</div>
+              <div className="df-v">2+ Years Field Experience</div>
             </div>
 
             <div className="df">

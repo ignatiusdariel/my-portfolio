@@ -105,7 +105,7 @@ export const PROJECTS: Project[] = [
     },
     {
         num: '005',
-        title: 'Website Ko Enzo',
+        title: 'Zest Website',
         subtitle: 'Company Profile Website',
         status: 'SOLVED',
         year: '2025',

@@ -255,11 +255,12 @@ export default function CaseBoard({ project, onClose, phase }: Props) {
                         >
                             <ImageCard imageUrl={project.previewUrl} filename={project.codeFile} />
                         </div>
-
-                        <div className="polaroids">
+                            
+                        {/* HIDE     */}
+                        {/* <div className="polaroids">
                             <Polaroid title="BUILD" sub="Architecture diagram" rotate={-4} />
                             <Polaroid title="DEPLOY" sub="Production metrics" rotate={3} />
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 
