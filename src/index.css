@@ -921,7 +921,7 @@ a:hover{
   border-left: 1px solid #1e1c15; border-right: 1px solid #1e1c15;
   position: relative; overflow: hidden;
   cursor: pointer;
-  filter: sepia(0.05) contrast(1.15) brightness(1.12); /* ← always show preview state */
+  filter: sepia(0.05) contrast(1.3) brightness(1.12); /* ← always show preview state */
   transition: filter 0.4s, transform 0.3s ease;        /* ← add transform */
   flex-shrink: 0;
 }
