@@ -3,7 +3,6 @@ import heroBg from '../assets/hero-bg.png';
 const Hero = () => {
   return (
     <section id="hero">
-
       <div className="hero-bg" style={{ backgroundImage: `url(${heroBg})` }} />
 
       <div className="hero-eyebrow">
@@ -17,32 +16,32 @@ const Hero = () => {
       </h1>
 
       <div className="hero-role">
-        // Portfolio of a {" "}
+        // Portfolio of a{" "}
         <span style={{ color: "white", background: "var(--amber-bright)" }}>Front-End Developer</span>
         {" "} —
       </div>
 
-      <div className="term">
-        <span className="p">$</span>
-        <span className="c">whoami</span>
-      </div>
-
-      <div className="term">
-        <span className="p">→</span>
-        <span style={{ color: "var(--amber)" }}>ign.dariel</span>
-        <span className="c">&nbsp;| dev | builder | problem_solver</span>
-      </div>
-
-      <div className="term">
-        <span className="p">$</span>
-        <span className="c">status --current</span>
-      </div>
-
-      <div className="term">
-        <span className="p">→</span>
-        <span style={{ color: "var(--green-code)" }}>
-          AVAILABLE FOR NEW MISSIONS
-        </span>
+      {/* Wrap terminal lines so they can be constrained together */}
+      <div className="hero-terminal">
+        <div className="term">
+          <span className="p">$</span>
+          <span className="c">whoami</span>
+        </div>
+        <div className="term">
+          <span className="p">→</span>
+          <span style={{ color: "var(--amber)" }}>ign.dariel</span>
+          <span className="c">&nbsp;| dev | builder | problem_solver</span>
+        </div>
+        <div className="term">
+          <span className="p">$</span>
+          <span className="c">status --current</span>
+        </div>
+        <div className="term">
+          <span className="p">→</span>
+          <span style={{ color: "var(--green-code)" }}>
+            AVAILABLE FOR NEW MISSIONS
+          </span>
+        </div>
       </div>
 
       <div className="hero-stack">
