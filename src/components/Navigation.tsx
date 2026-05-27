@@ -30,7 +30,14 @@ const Navigation = () => {
     <>
       <nav className="classified-nav">
         {/* Left ID Block */}
-        <div className="flex items-center pb-1">
+        <div
+          className="flex items-center pb-1 cursor-pointer"
+          onClick={() => {
+            document.getElementById('hero')?.scrollIntoView({
+              behavior: 'smooth',
+            });
+          }}
+        >
           <img
             src={logo}
             alt="My Logo"
